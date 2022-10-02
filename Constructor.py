@@ -6,12 +6,10 @@
 ####################
 
 class Candidate:
-    def __init__(self, name, last_name, email,ariel):
+    def __init__(self, name, last_name, email):
         self.name = name
         self.last_name = last_name
         self.email = email
-        self.ariel = ariel
-
 
 ####################
 # Main
