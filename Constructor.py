@@ -21,3 +21,7 @@ class Candidate:
 ####################
 # Main
 ####################
+
+if __name__ == "__main__":
+    user1 = Candidate('Amine', 'Hadji', 'aamine.hadji.99@gmail.com')
+    print(user1)
