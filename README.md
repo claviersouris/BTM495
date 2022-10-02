@@ -1,5 +1,5 @@
 # BTM495
 Babarella project
 
-Build prototype for btm496 group project
+Build prototype for btm495 group project
 
