@@ -1,6 +1,6 @@
-#Name: your_name
-#Date: today_date
-#Comments: Comments on what was done on this commit.
+#Name: Ariel
+#Date: 22/10
+#Comments: all class created
 
 ####################
 #Importing modules
@@ -59,8 +59,27 @@ class Candidate:
         self.interview = interview
         self.is_archived = is_archived
 
-#class Trainee(Candidate):
- #   def __init_(self,trainee_ID,start_date):
+class Trainee(Candidate):
+    def __init_(self,trainee_ID,start_date):
+        self.trainee_ID = trainee_ID
+        self.start_date = start_date
+
+class Interview:
+    def __init__(self,ID,candidate,interviewer,timeslot,interview_Results):
+        self.ID = ID
+        self.candidate = candidate
+        self.interviewer = interviewer
+        self.timeslot = timeSlot
+        self.interview_Results = interview_Results
+
+class TimeSlot:
+    def __init__(self, ID, interviewer,candidate,interview,date_time):
+        self.ID = ID
+        self.interviewer = interviewer
+        self.candidate = candidate
+        self.interview = interview
+        self.date_time = date_time
+
 
 
 
@@ -73,13 +92,13 @@ user2 = Interviewer("011",'Ariel','Piotraut','ariel@gmail','060606','10 sept, 11
 print(user2.employee_ID, user2.firstName, user2.last_name, user2.email, user2.phoneNum, user2.planned_interview, user2.availabilities,user2.created_job_Postings)
 print(user2)
 
-candidate = Candidate('001', 'Studentnae', 'StudentLastName', '03 fevrier', 'email@email', '070809', appform.ID, '06 mars', '06 mars', '0')
+
 
 jobPost = Job_Posting('01', 'BARISTA', 'being the barista', '5', user2.last_name, 'created') 
 print(jobPost)
 print(jobPost.ID, jobPost.title, jobPost.description, jobPost.num_of_jobOffers, jobPost.interviewer, jobPost.application_Forms)
 
-appform = application_Forms('43', candidate.name, jobPost.ID, 'student')
-print(appform)
-print("Application Form: ", "\nappform: ID: ",appform.ID, "\ncandidate name: ", appform.candidate, "\nJob Posting ID: ", appform.jobPosting,"\nCV :", appform.CV)
+
+
+
 
