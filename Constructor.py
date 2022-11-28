@@ -1,6 +1,9 @@
 import email
 
 
+import email
+
+
 class Candidate:
     def __init__(self,candidate_ID,firstName,lastName,dateOfBirth,email,phoneNum, applicationForm, tentative_appointment, interview, is_archived):
         self.candidate_ID = candidate_ID
@@ -40,14 +43,15 @@ class Interviewer:
         self.availabilities.append(TimeSlot)
 
 class Job_Posting:
-    def __init__(self, ID, title, description, num_of_jobOffers, interviewer, application_Forms):
-        self.ID = ID
+    def __init__(self, post_ID, title, description, num_of_jobOffers, interviewer, application_Forms):
+        self.post_ID = post_ID
         self.title = title
         self.description = description
         self.num_of_jobOffers = num_of_jobOffers
         self.interviewer = Interviewer
         self.Application_Forms = [Application_Form]
 
+<<<<<<< HEAD
 class Application_Form:
     def __init__(self, ID, candidate, jobPosting, CV):
         self.ID = ID
@@ -62,6 +66,39 @@ class Interview:
         self.candidate = Candidate
         self.interviewer = Interviewer
         self.timeslot = TimeSlot
+=======
+class application_Forms:
+    def __init__(self, app_ID, candidate, jobPosting, CV):
+        self.app_ID = app_ID
+        self.candidate = candidate
+        self.jobPosting = jobPosting
+        self.CV = CV
+
+class Candidate:
+    def __init__(self,candidate_ID,firstName,lastName,dateOfBirth, email, phoneNum, applicationForm, tentative_appointment, interview, is_archived):
+        self.candidate_ID = candidate_ID
+        self.firstName = firstName
+        self.lastName = lastName
+        self.dateOfBirth = dateOfBirth
+        self.email = email
+        self.phoneNum = phoneNum
+        self.applicationForm = applicationForm
+        self.tentative_appointment = tentative_appointment
+        self.interview = interview
+        self.is_archived = is_archived
+
+class Trainee(Candidate):
+    def __init__(self,trainee_ID,start_date):
+        self.trainee_ID = trainee_ID
+        self.start_date = start_date
+
+class Interview:
+    def __init__(self,Interview_ID,candidate,interviewer,timeslot,interview_Results):
+        self.Interview_ID = Interview_ID
+        self.candidate = candidate
+        self.interviewer = interviewer
+        self.timeslot = timeslot
+>>>>>>> 69a5b37d4e544d853d3564faf42b373f70fb3fe1
         self.interview_Results = interview_Results
 
     def inform(self, Interview, Candidate):
@@ -71,6 +108,7 @@ class Interview:
             Candidate.is_archived = True
 
 class TimeSlot:
+<<<<<<< HEAD
     def __init__(self,ID,interviewer,candidate,interview,date_time):
         self.ID = ID
         self.interviewer = Interviewer
@@ -81,6 +119,14 @@ class TimeSlot:
     def send_timeSlots(self, Candidate):
         Candidate.tentative_appointment.append([TimeSlot])
     
+=======
+    def __init__(self, interviewer,candidate,interview,date_time):
+        self.interviewer = interviewer
+        self.candidate = candidate
+        self.interview = interview
+        self.date_time = date_time
+
+>>>>>>> 69a5b37d4e544d853d3564faf42b373f70fb3fe1
 
 ####################
 # Main
@@ -88,6 +134,7 @@ class TimeSlot:
 
 interviewer_01 = Interviewer("01","John","Doe","01/01/1964","johndoe@gmail.com","514-815-6677",[],[],[])
 
+<<<<<<< HEAD
 
 job_post_01 = Job_Posting("01", "Cashier", "Assure the welcoming of customers and cash register operations.", "8", interviewer_01, [])
 #appending job posting into interviewer object
@@ -103,6 +150,15 @@ job_post_01.Application_Forms.append(app_form_01)
 candidate_01 = Candidate("01", "Bruce", "Banner", "02/02/1993", "brucebannerhulk@gmail.com", "438-661-7389", app_form_01, [], " ", 0) #not archived
 #appending candidate into application_form object 
 app_form_01.candidate = candidate_01
+=======
+user = Interviewer("011",'Ariel','Piotraut','ariel@gmail','060606','10 sept, 11 sept','Week of 13th','Job1, Job2')
+print(user.employee_ID, user.firstName, user.last_name, user.email, user.phoneNum, user.planned_interview, user.availabilities, user.created_job_Postings)
+print(user)
+
+jobPost = Job_Posting('01', 'BARISTA', 'being the barista', '5', user.last_name, 'created') 
+print(jobPost)
+print(jobPost.ID, jobPost.title, jobPost.description, jobPost.num_of_jobOffers, jobPost.interviewer, jobPost.application_Forms)
+>>>>>>> 69a5b37d4e544d853d3564faf42b373f70fb3fe1
 
 
 interview_01 = Interview("01", candidate_01, interviewer_01, " ", "Candidate has successfully passed the interview")
@@ -111,7 +167,11 @@ interviewer_01.planned_interview.append(interview_01)
 #appending interview into candidate object
 candidate_01.interview = interview_01
 
+############################
+# FUNCTIONS
+############################
 
+<<<<<<< HEAD
 timeslot_01 = TimeSlot("01", interviewer_01, candidate_01, interview_01, "December 2nd 2022 - 1PM")
 #appending timeslot into interview object
 interview_01.timeslot = timeslot_01
@@ -144,4 +204,17 @@ print(candidate_01.is_available(timeslot_03))
 interview_02 = Interview("2", candidate_01, interviewer_01, timeslot_02, False)
 interview_02.inform(interview_02,candidate_01)
 print(candidate_01.is_archived)
+=======
+def is_available(Candidate, Interviewer):
+    interview = Interview(Interview_ID, Candidate, Interviewer, Candidate.tentative_appointment, 0)    
+    return interview 
+>>>>>>> 69a5b37d4e544d853d3564faf42b373f70fb3fe1
 
+def send_timeSlots(self, Candidate,TimeSlot):
+    self.Candidate.tentative_appointments.append([TimeSlot])
+
+def inform(Interview, Candidate):
+    if Interview.interview_Result == True: 
+        Candidate.is_archived = False
+    else: 
+        Candidate.is_archived = True
