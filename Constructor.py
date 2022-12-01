@@ -1,5 +1,10 @@
 import email
-
+import pymongo 
+from pymongo import MongoClient
+import pymongo as pmg
+import json
+from json import JSONEncoder
+import jsonpickle
 
 class Candidate:
     def __init__(self,candidate_ID,firstName,lastName,dateOfBirth,email,phoneNum, applicationForm, tentative_appointment, interview, is_archived):
@@ -13,10 +18,17 @@ class Candidate:
         self.tentative_appointment = [TimeSlot]
         self.interview = Interview
         self.is_archived = is_archived
+    
 
     def is_available(self,TimeSlot):
         interview_av = Interview(" ", self, TimeSlot.interviewer, TimeSlot, " ")
         return interview_av
+    
+    def add_candidate(candidate): 
+        client = MongoClient(mongodbhost)
+        db = client.Barbarella
+        db_col = db['Candidates']
+        db_col.insert_one(candidate)
 
 class Trainee(Candidate):
         def __init__(self,trainee_ID,start_date):
@@ -83,7 +95,7 @@ class TimeSlot:
     
 
 ####################
-# Main
+#    DEPLOYMENT    #
 ####################
 
 interviewer_01 = Interviewer("01","John","Doe","01/01/1964","johndoe@gmail.com","514-815-6677",[],[],[])
@@ -99,8 +111,8 @@ app_form_01 = Application_Form("01", " ", job_post_01, "C:Users\JohnDoe\Desktop\
 job_post_01.Application_Forms.append(app_form_01)
 
 
-
 candidate_01 = Candidate("01", "Bruce", "Banner", "02/02/1993", "brucebannerhulk@gmail.com", "438-661-7389", app_form_01, [], " ", 0) #not archived
+
 #appending candidate into application_form object 
 app_form_01.candidate = candidate_01
 
@@ -112,7 +124,7 @@ interviewer_01.planned_interview.append(interview_01)
 candidate_01.interview = interview_01
 
 
-timeslot_01 = TimeSlot("01", interviewer_01, candidate_01, interview_01, "December 2nd 2022 - 1PM")
+timeslot_01 = TimeSlot("01", interviewer_01.__repr__, candidate_01, interview_01.__repr__, "December 2nd 2022 - 1PM")
 #appending timeslot into interview object
 interview_01.timeslot = timeslot_01
 #appending timeslot into candidate object
@@ -121,8 +133,9 @@ candidate_01.tentative_appointment.append(timeslot_01)
 interviewer_01.availabilities.append(timeslot_01)
 
 
+
 ############################
-# FUNCTIONS
+#       FUNCTIONS          #
 ############################
 
 #add_timeslot method:
@@ -144,4 +157,57 @@ print(candidate_01.is_available(timeslot_03))
 interview_02 = Interview("2", candidate_01, interviewer_01, timeslot_02, False)
 interview_02.inform(interview_02,candidate_01)
 print(candidate_01.is_archived)
+
+##############################
+#      SEND TO DATABASE      #  
+##############################
+
+# Database connector:
+mongodbhost = 'mongodb://localhost:27017'
+
+#Encode all objects & load them as jsons
+
+timeslot_01 = jsonpickle.encode(timeslot_01)
+timeslot_02 = jsonpickle.encode(timeslot_02)
+timeslot_03 = jsonpickle.encode(timeslot_03)
+interviewer_01 = jsonpickle.encode(interviewer_01)
+candidate_01 = jsonpickle.encode(candidate_01)
+interview_01 = jsonpickle.encode(interview_01)
+interview_02 = jsonpickle.encode(interview_02)
+
+candidate_01 = json.loads(candidate_01)
+interviewer_01 = json.loads(interviewer_01)
+timeslot_01 = json.loads(timeslot_01)
+
+#####################################
+#     Database Create Functions     #  
+#####################################
+
+def add_candidate(candidate): 
+    client = MongoClient(mongodbhost)
+    db = client.Barbarella
+    db_col = db['Candidates']
+    db_col.insert_one(candidate)
+
+def add_timeslot(object):
+    client = MongoClient(mongodbhost)
+    db = client.Barbarella
+    db_col = client.log
+    db_col = db['Timeslot']
+    db_col.insert_one(object)
+
+def add_interviewer(object):
+    client = MongoClient(mongodbhost)
+    db = client.Barbarella
+    db_col = client.log
+    db_col = db['Interviewer']
+    db_col.insert_one(object)
+
+#Store the objects in mongo
+
+add_candidate(candidate_01)
+add_timeslot(timeslot_01)
+add_interviewer(interviewer_01)
+
+print('Data Successfully stored in MongoDB')
 
